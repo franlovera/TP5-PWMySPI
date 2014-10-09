@@ -2,7 +2,10 @@
 <workbench version="2.0">
 <workbenchAdvisor/>
 <window>
-<fastViewData fastViewLocation="1024"/>
+<fastViewData fastViewLocation="1024">
+<orientation position="512" view="org.coocox.codebugger.trace.ui.traceview"/>
+<orientation position="512" view="org.eclipse.debug.ui.VariableView"/>
+</fastViewData>
 <perspectiveBar/>
 <page focus="true" label="Workspace - CooCox CoBuilder">
 <editors>
@@ -30,9 +33,9 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TP5-PWMySPI/bsp/bsp.h"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="412" selectionTopPixel="585"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="bsp.c" partName="bsp.c" path="C:/Users/mm/Desktop/TP5-PWMySPI/bsp/bsp.c" title="bsp.c" tooltip="C:/Users/mm/Desktop/TP5-PWMySPI/bsp/bsp.c" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="bsp.c" partName="bsp.c" path="D:/Descargas/branch adc/bsp/bsp.c" title="bsp.c" tooltip="D:/Descargas/branch adc/bsp/bsp.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TP5-PWMySPI/bsp/bsp.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6499" selectionTopPixel="4633"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6499" selectionTopPixel="3145"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_tim.h" partName="stm32f4xx_tim.h" path="C:/Users/mm/Desktop/TP5-PWMySPI/cmsis_lib/include/stm32f4xx_tim.h" title="stm32f4xx_tim.h" tooltip="C:/Users/mm/Desktop/TP5-PWMySPI/cmsis_lib/include/stm32f4xx_tim.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TP5-PWMySPI/cmsis_lib/include/stm32f4xx_tim.h"/>
@@ -56,11 +59,6 @@
 </editor>
 </editors>
 <views>
-<view id="org.eclipse.debug.ui.ExpressionView" partName="Expressions">
-<viewState>
-<ExpressionKeySet ExpKeys="bsp_contMS,adc,X,"/>
-</viewState>
-</view>
 <view id="org.coocox.builder.ui.views.ProjectView" partName="Project">
 <viewState CommonNavigator.LINKING_ENABLED="0" horizontalPosition="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="1" verticalPosition="0">
 <expanded>
@@ -75,19 +73,7 @@
 <view id="org.coocox.component.ui.ComponentView" partName="Components">
 <viewState/>
 </view>
-<view id="org.coocox.codebugger.trace.ui.traceview" partName="Semihosting">
-<viewState/>
-</view>
-<view id="org.eclipse.debug.ui.DebugView" partName="Debug">
-<viewState/>
-</view>
 <view id="org.eclipse.ui.console.ConsoleView" partName="Console">
-<viewState/>
-</view>
-<view id="org.eclipse.debug.ui.VariableView" partName="Variables">
-<viewState/>
-</view>
-<view id="org.eclipse.debug.ui.BreakpointView" partName="Breakpoints">
 <viewState/>
 </view>
 </views>
@@ -129,7 +115,7 @@
 </fastViewBar>
 <fastViewBar fastViewLocation="16384" id="org.eclipse.ui.internal.ViewStack@d2b042" orientation="256" selectedTabId="org.coocox.builder.ui.views.ProjectView" style="1">
 <fastViews>
-<view id="org.coocox.builder.ui.views.ProjectView" ratio="0.29758713"/>
+<view id="org.coocox.builder.ui.views.ProjectView" ratio="0.2970852"/>
 </fastViews>
 </fastViewBar>
 <fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@f63eec" orientation="256" selectedTabId="org.eclipse.ui.console.ConsoleView" style="0">
@@ -141,7 +127,7 @@
 <layout>
 <mainWindow>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@17509be">
-<folder appearance="2" expanded="0">
+<folder appearance="2" expanded="2">
 <page content="org.coocox.component.ui.ComponentView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
@@ -171,7 +157,7 @@
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.44969696" ratioLeft="371" ratioRight="454" relationship="4" relative="org.coocox.builder.ui.exampleView"/>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@d2b042" ratio="0.36969697" ratioLeft="305" ratioRight="520" relationship="4" relative="org.eclipse.ui.internal.ViewStack@17509be">
-<folder appearance="2" expanded="0">
+<folder appearance="2" expanded="2">
 <page content="org.coocox.builder.ui.views.ProjectView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
@@ -223,56 +209,37 @@
 <hide_toolbar_item_id id="org.coocox.welcome.ui.action.welcome"/>
 <hide_toolbar_item_id id="org.coocox.component.ui.ShowRepositoryAction"/>
 <hide_toolbar_item_id id="org.coocox.codebugger.configuration.coideProgramDownloadAction"/>
-<fastViewBars>
-<fastViewBar fastViewLocation="16384" id="org.eclipse.ui.internal.ViewStack@5c849d" orientation="256" selectedTabId="org.eclipse.debug.ui.DebugView" style="1">
-<fastViews>
-<view id="org.eclipse.debug.ui.DebugView" ratio="0.29758713"/>
+<fastViewBars>&#x0A;<fastViewBar fastViewLocation="16384" id="org.eclipse.ui.internal.ViewStack@5c849d" orientation="256" selectedTabId="org.eclipse.debug.ui.DebugView" style="1">&#x0A;<fastViews>&#x0A;<view id="org.eclipse.debug.ui.DebugView" ratio="0.29758713"/>
 <view id="org.eclipse.ui.console.ConsoleView" ratio="0.3"/>
 </fastViews>
 </fastViewBar>
-<fastViewBar fastViewLocation="131072" id="org.eclipse.ui.internal.ViewStack@6191f9" orientation="256" selectedTabId="org.eclipse.debug.ui.ExpressionView" style="1">
-<fastViews>
-<view id="org.coocox.codebugger.trace.ui.traceview" ratio="0.3"/>
+<fastViewBar fastViewLocation="131072" id="org.eclipse.ui.internal.ViewStack@6191f9" orientation="256" selectedTabId="org.eclipse.debug.ui.ExpressionView" style="1">&#x0A;<fastViews>&#x0A;<view id="org.coocox.codebugger.trace.ui.traceview" ratio="0.3"/>
 <view id="org.eclipse.debug.ui.VariableView" ratio="0.3"/>
 <view id="org.eclipse.debug.ui.ExpressionView" ratio="0.3"/>
 </fastViews>
 </fastViewBar>
-<fastViewBar fastViewLocation="16384" id="org.eclipse.ui.internal.ViewStack@1378af6" orientation="512" selectedTabId="org.coocox.builder.ui.views.ProjectView" style="1">
-<fastViews>
-<view id="org.coocox.builder.ui.views.ProjectView" ratio="0.3"/>
+<fastViewBar fastViewLocation="16384" id="org.eclipse.ui.internal.ViewStack@1378af6" orientation="512" selectedTabId="org.coocox.builder.ui.views.ProjectView" style="1">&#x0A;<fastViews>&#x0A;<view id="org.coocox.builder.ui.views.ProjectView" ratio="0.3"/>
 </fastViews>
 </fastViewBar>
-<fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@c4d172" orientation="256" selectedTabId="org.eclipse.debug.ui.BreakpointView" style="1">
-<fastViews>
-<view id="org.eclipse.debug.ui.BreakpointView" ratio="0.3"/>
+<fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@c4d172" orientation="256" selectedTabId="org.eclipse.debug.ui.BreakpointView" style="1">&#x0A;<fastViews>&#x0A;<view id="org.eclipse.debug.ui.BreakpointView" ratio="0.3"/>
 </fastViews>
 </fastViewBar>
 </fastViewBars>
 <viewLayoutRec closeable="false" id="org.eclipse.debug.ui.DebugView"/>
-<layout>
-<mainWindow>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@1378af6">
-<folder appearance="2" expanded="0">
-<page content="org.coocox.builder.ui.views.ProjectView" label="LabelNotFound"/>
+<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="org.eclipse.ui.internal.ViewStack@1378af6">&#x0A;<folder appearance="2" expanded="0">&#x0A;<page content="org.coocox.builder.ui.views.ProjectView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1434" ratioRight="478" relationship="2" relative="org.eclipse.ui.internal.ViewStack@1378af6">
-<folder appearance="2" expanded="2">
-<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1434" ratioRight="478" relationship="2" relative="org.eclipse.ui.internal.ViewStack@1378af6">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@5c849d" ratio="0.61764705" ratioLeft="231" ratioRight="143" relationship="4" relative="org.eclipse.ui.internal.ViewStack@1378af6">
-<folder appearance="2" expanded="0">
-<page content="org.eclipse.debug.ui.DebugView" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@5c849d" ratio="0.61764705" ratioLeft="231" ratioRight="143" relationship="4" relative="org.eclipse.ui.internal.ViewStack@1378af6">&#x0A;<folder appearance="2" expanded="0">&#x0A;<page content="org.eclipse.debug.ui.DebugView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@6191f9" ratio="0.35107732" ratioLeft="277" ratioRight="512" relationship="2" relative="org.eclipse.ui.internal.ViewStack@5c849d">
-<folder appearance="2" expanded="0">
-<page content="org.coocox.codebugger.trace.ui.traceview" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@6191f9" ratio="0.35107732" ratioLeft="277" ratioRight="512" relationship="2" relative="org.eclipse.ui.internal.ViewStack@5c849d">&#x0A;<folder appearance="2" expanded="0">&#x0A;<page content="org.coocox.codebugger.trace.ui.traceview" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.VariableView" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.MemoryView" label="LabelNotFound"/>
@@ -280,9 +247,7 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@7f2c55" ratio="0.75" ratioLeft="1434" ratioRight="478" relationship="2" relative="org.eclipse.ui.internal.ViewStack@1378af6">
-<folder appearance="2" expanded="2">
-<page content="org.eclipse.cdt.dsf.debug.ui.disassembly.view" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@7f2c55" ratio="0.75" ratioLeft="1434" ratioRight="478" relationship="2" relative="org.eclipse.ui.internal.ViewStack@1378af6">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.cdt.dsf.debug.ui.disassembly.view" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.RegisterView" label="LabelNotFound"/>
 <page content="org.coocox.coassistant.view.CoAssistantView_debug" label="LabelNotFound"/>
@@ -290,9 +255,7 @@
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.24588086" ratioLeft="194" ratioRight="595" relationship="2" relative="org.eclipse.ui.internal.ViewStack@1378af6"/>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@c4d172" ratio="0.82951653" ratioLeft="326" ratioRight="67" relationship="4" relative="org.eclipse.ui.editorss">
-<folder appearance="2" expanded="0">
-<page content="org.eclipse.debug.ui.BreakpointView" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@c4d172" ratio="0.82951653" ratioLeft="326" ratioRight="67" relationship="4" relative="org.eclipse.ui.editorss">&#x0A;<folder appearance="2" expanded="0">&#x0A;<page content="org.eclipse.debug.ui.BreakpointView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
@@ -469,6 +432,34 @@
 <actionBarAdvisor/>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" tooltip="testSE/main.c">
+<persistable path="/testSE/main.c"/>
+</file>
+<file factoryID="org.coocox.component.board.ui.editor.BoardEditorElementFactory" id="org.coocox.component.board.ui.editor.BoardBrowserEditor" name="Board" tooltip="Board">
+<persistable>&#x0A;<subPage/>
+</persistable>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="chschd.h" tooltip="SSE/os/kernel/include/chschd.h">
+<persistable path="/SSE/os/kernel/include/chschd.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" tooltip="SSE/main.c">
+<persistable path="/SSE/main.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="crt0.c" tooltip="SSE/os/ports/GCC/ARMCMx/crt0.c">
+<persistable path="/SSE/os/ports/GCC/ARMCMx/crt0.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="chbsem.h" tooltip="SSE/os/kernel/include/chbsem.h">
+<persistable path="/SSE/os/kernel/include/chbsem.h"/>
+</file>
+<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stdlib.h" tooltip="C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\arm-none-eabi\include\stdlib.h">
+<persistable path="C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\arm-none-eabi\include\stdlib.h" project="SSE"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4_discovery.c" tooltip="AudioPlayer1/stm32f4_discovery.c">
+<persistable path="/AudioPlayer1/stm32f4_discovery.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="readme.txt" tooltip="AudioPlayer1/FreeRTOS/portable/readme.txt">
+<persistable path="/AudioPlayer1/FreeRTOS/portable/readme.txt"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" tooltip="TP5-PWMySPI/cmsis_boot/startup/startup_stm32f4xx.c">
 <persistable path="/TP5-PWMySPI/cmsis_boot/startup/startup_stm32f4xx.c"/>
 </file>
@@ -483,34 +474,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_gpio.h" tooltip="TP5-PWMySPI/cmsis_lib/include/stm32f4xx_gpio.h">
 <persistable path="/TP5-PWMySPI/cmsis_lib/include/stm32f4xx_gpio.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_tim.h" tooltip="TP5-PWMySPI/cmsis_lib/include/stm32f4xx_tim.h">
-<persistable path="/TP5-PWMySPI/cmsis_lib/include/stm32f4xx_tim.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="bsp.c" tooltip="TP5-PWMySPI/bsp/bsp.c">
-<persistable path="/TP5-PWMySPI/bsp/bsp.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="LIS3DSH.c" tooltip="TP5-PWMySPI/LIS3DSH.c">
-<persistable path="/TP5-PWMySPI/LIS3DSH.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="LIS3DSH_HW.h" tooltip="TP5-PWMySPI/LIS3DSH_HW.h">
-<persistable path="/TP5-PWMySPI/LIS3DSH_HW.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="LIS3DSH.h" tooltip="TP5-PWMySPI/LIS3DSH.h">
-<persistable path="/TP5-PWMySPI/LIS3DSH.h"/>
-</file>
-<file factoryID="org.coocox.component.board.ui.editor.BoardEditorElementFactory" id="org.coocox.component.board.ui.editor.BoardBrowserEditor" name="Board" tooltip="Board">
-<persistable>&#x0A;<subPage/>
-</persistable>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="bsp.h" tooltip="TP5-PWMySPI/bsp/bsp.h">
-<persistable path="/TP5-PWMySPI/bsp/bsp.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="LIS3DSH_HW.c" tooltip="TP5-PWMySPI/LIS3DSH_HW.c">
-<persistable path="/TP5-PWMySPI/LIS3DSH_HW.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" tooltip="TP5-PWMySPI/main.c">
-<persistable path="/TP5-PWMySPI/main.c"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx.h" tooltip="PWM/cmsis_boot/stm32f4xx.h">
 <persistable path="/PWM/cmsis_boot/stm32f4xx.h"/>
