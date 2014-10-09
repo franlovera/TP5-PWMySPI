@@ -71,6 +71,9 @@ int main(void) {
 		else
 			led_off(11);
 
+		led_setBright(0, a);
+		led_setBright(1, a);
+		led_setBright(2, a);
 
 
 	}
