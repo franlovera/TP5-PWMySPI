@@ -18,22 +18,60 @@ int main(void) {
 	int flag = 0;
 
 	while (1) {
-		bsp_delayMs(100);
-
-		led_toggle(0);
-		led_toggle(1);
-		led_toggle(2);
-		led_toggle(3);
-		led_toggle(4);
-		led_toggle(5);
-		led_toggle(6);
-		led_toggle(7);
-		led_toggle(8);
-		led_toggle(9);
-		led_toggle(10);
-		led_toggle(11);
+		bsp_delayMs(50);
 
 		a=read_pot();
+		if(a>8)
+			led_on(0);
+		else {
+			led_off(0);
+		}
+		if(a>16)
+			led_on(1);
+		else
+			led_off(1);
+		if(a>24)
+			led_on(2);
+		else
+			led_off(2);
+		if(a>32)
+			led_on(3);
+		else
+			led_off(3);
+		if(a>40)
+			led_on(4);
+		else
+			led_off(4);
+		if(a>48)
+			led_on(5);
+		else
+			led_off(5);
+		if(a>56)
+			led_on(6);
+		else
+			led_off(6);
+		if(a>64)
+			led_on(7);
+		else
+			led_off(7);
+		if(a>72)
+			led_on(8);
+		else
+			led_off(8);
+		if(a>80)
+			led_on(9);
+		else
+			led_off(9);
+		if(a>88)
+			led_on(10);
+		else
+			led_off(10);
+		if(a>95)
+			led_on(11);
+		else
+			led_off(11);
+
+
 
 	}
 }

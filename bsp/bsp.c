@@ -313,4 +313,6 @@ uint16_t read_pot(){
 
 	// Guardo el valor leido
 	valor = ADC_GetConversionValue(ADC1);
+	valor = valor/41;
+	return  valor;
 }
