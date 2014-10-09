@@ -14,26 +14,27 @@ void ledPulso(uint8_t led, uint32_t tiempo);
  */
 int main(void) {
 	bsp_init();
-	int brillo = 0;
+	int brillo = 0,a;
 	int flag = 0;
 
 	while (1) {
 		bsp_delayMs(100);
 
-		led_setBright(0,brillo);
-		led_setBright(1,brillo);
-		led_setBright(2,brillo);
-		led_setBright(3,brillo);
+		led_toggle(0);
+		led_toggle(1);
+		led_toggle(2);
+		led_toggle(3);
+		led_toggle(4);
+		led_toggle(5);
+		led_toggle(6);
+		led_toggle(7);
+		led_toggle(8);
+		led_toggle(9);
+		led_toggle(10);
+		led_toggle(11);
 
-		if(brillo >= 100)
-			flag = 0;
-		if(brillo <=0)
-			flag = 1;
+		a=read_pot();
 
-		if(flag)
-			brillo++;
-		else
-			brillo--;
 	}
 }
 
@@ -51,11 +52,6 @@ void APP_ISR_sw(void){
  */
 void APP_ISR_1ms(void){
 	static uint16_t count_1s = 1000;
-	count_1s--;
-	if (!count_1s) {
-		led_toggle(0);
-		count_1s = 1000;
-	}
 }
 
 
