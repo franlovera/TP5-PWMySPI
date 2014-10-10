@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdio.h>
 #include "bsp/bsp.h"
 
 /**
@@ -9,18 +10,23 @@
  */
 void ledPulso(uint8_t led, uint32_t tiempo);
 
+int brillo = 0,a,pote_old_state,pote_dif;
+int flag = 0,flag_serie=0;
+char string_serie[50];
 /**
  * @brief Aplicacion principal
  */
 int main(void) {
 	bsp_init();
-	int brillo = 0,a;
-	int flag = 0;
+
 
 	while (1) {
 		bsp_delayMs(50);
-
+		pote_old_state=a;
 		a=read_pot();
+		pote_dif=abs(pote_old_state-a);
+
+
 		if(a>8)
 			led_on(0);
 		else {
@@ -75,6 +81,17 @@ int main(void) {
 		led_setBright(1, a);
 		led_setBright(2, a);
 
+//		if(pote_dif<3){
+//			if(!flag_serie){
+//			sprintf(string_serie,"potenciometro = %3d% \n\r",a);
+//			send_char(&string_serie);
+//			flag_serie=1;
+//		}
+//		}
+//		else{
+//			flag_serie=0;
+//		}
+
 
 	}
 }
@@ -92,7 +109,25 @@ void APP_ISR_sw(void){
  *
  */
 void APP_ISR_1ms(void){
-	static uint16_t count_1s = 1000;
+	static uint16_t count_1s=0,new_dif_pote =0;
+	if(pote_dif<3)
+	count_1s++;
+	else
+		count_1s=0;
+	if(count_1s>=1000){
+		count_1s=0;
+			if(!flag_serie){
+			sprintf(string_serie,"potenciometro = %3d% \n\r",a);
+			send_char(&string_serie);
+			flag_serie=1;
+
+		}
+		else{
+			flag_serie=0;
+		}
+
+		new_dif_pote=pote_dif;
+	}
 }
 
 

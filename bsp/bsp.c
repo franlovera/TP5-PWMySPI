@@ -6,6 +6,7 @@
 #include "stm32f4xx_exti.h"		// Controlador interrupciones externas
 #include "stm32f4xx_adc.h"
 #include "stm32f4xx_syscfg.h"	// configuraciones Generales
+#include "stm32f4xx_usart.h"
 #include "misc.h"				// Vectores de interrupciones (NVIC)
 #include "bsp.h"
 
@@ -105,9 +106,12 @@ void bsp_sw_init();
 void bsp_timer_config();
 void bsp_adc_init();
 void bsp_pot_init();
+void bsp_uart_init();
 
 
 uint16_t read_pot();
+
+void send_char(char *character);
 
 void bsp_init() {
 	bsp_led_init();
@@ -116,6 +120,7 @@ void bsp_init() {
 //	bsp_sw_init();
 	bsp_adc_init();
 	bsp_timer_config();
+	bsp_uart_init();
 }
 
 /**
@@ -299,6 +304,47 @@ void bsp_pot_init(){
 	GPIO_Init(GPIOC, &GPIO_InitStruct);
 }
 
+void bsp_uart_init(){
+
+	 USART_InitTypeDef USART_InitStructure;
+	 GPIO_InitTypeDef GPIO_InitStructure;
+
+	    // Habilito Clocks
+	 RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+	 RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
+
+	    // Configuro Pin TX
+	 GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	 GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+	 GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	 GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
+	 GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	 GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+	 GPIO_PinAFConfig(GPIOD, GPIO_PinSource8, GPIO_AF_USART3);
+
+	    //  Configuro Pin RX
+	 GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	 GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+	 GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+	 GPIO_PinAFConfig(GPIOD, GPIO_PinSource9, GPIO_AF_USART3);
+
+		//Configuro UART
+	 USART_InitStructure.USART_BaudRate = 115200;
+	 USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+	 USART_InitStructure.USART_StopBits = USART_StopBits_1;
+	 USART_InitStructure.USART_Parity = USART_Parity_No;
+	 USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	 USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+
+	     // Inicializo la USART
+	 USART_Init(USART3, &USART_InitStructure);
+
+	     // Habilito la Usart
+	 USART_Cmd(USART3, ENABLE);
+}
+
 uint16_t read_pot(){
 	uint16_t valor;
 
@@ -316,4 +362,17 @@ uint16_t read_pot(){
 	return  valor;
 }
 
+void send_char(char *string){
+	int8_t character=1;
+	int8_t i;
+	for(i=0;i<50;i++){
+		character=string[i];
+		if(character==0x00)
+			break;
+		while(!USART_GetFlagStatus(USART3, USART_FLAG_TXE)){
+			}
+		USART_SendData(USART3, (uint16_t) character);
+	}
 
+
+}
