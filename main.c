@@ -11,12 +11,15 @@
 void ledPulso(uint8_t led, uint32_t tiempo);
 
 int brillo = 0,a,pote_old_state,pote_dif;
-int flag = 0,flag_serie=0;
+int flag = 0,flag_serie=0,flag_transmit=0;
 char string_serie[50];
+
+
 /**
  * @brief Aplicacion principal
  */
 int main(void) {
+	int i=0;
 	bsp_init();
 
 
@@ -27,73 +30,32 @@ int main(void) {
 		pote_dif=abs(pote_old_state-a);
 
 
-		if(a>8)
-			led_on(0);
-		else {
-			led_off(0);
+		for(i=0; i<=11; i++){
+			if(a>i*8)
+				led_on(i);
+			else
+				led_off(i);
 		}
-		if(a>16)
-			led_on(1);
-		else
-			led_off(1);
-		if(a>24)
-			led_on(2);
-		else
-			led_off(2);
-		if(a>32)
-			led_on(3);
-		else
-			led_off(3);
-		if(a>40)
-			led_on(4);
-		else
-			led_off(4);
-		if(a>48)
-			led_on(5);
-		else
-			led_off(5);
-		if(a>56)
-			led_on(6);
-		else
-			led_off(6);
-		if(a>64)
-			led_on(7);
-		else
-			led_off(7);
-		if(a>72)
-			led_on(8);
-		else
-			led_off(8);
-		if(a>80)
-			led_on(9);
-		else
-			led_off(9);
-		if(a>88)
-			led_on(10);
-		else
-			led_off(10);
-		if(a>95)
-			led_on(11);
-		else
-			led_off(11);
+
+
 
 		led_setBright(0, a);
 		led_setBright(1, a);
 		led_setBright(2, a);
 
-//		if(pote_dif<3){
+//		if(flag_transmit){
 //			if(!flag_serie){
-//			sprintf(string_serie,"potenciometro = %3d% \n\r",a);
+//			sprintf(string_serie,"potenciometro = %3d º/. \n\r",a);
 //			send_char(&string_serie);
-//			flag_serie=1;
+//			flag_transmit=0;
+//
 //		}
-//		}
-//		else{
-//			flag_serie=0;
-//		}
-
-
-	}
+//
+//
+//
+//
+//	}
+}
 }
 
 /**
@@ -110,25 +72,63 @@ void APP_ISR_sw(void){
  */
 void APP_ISR_1ms(void){
 	static uint16_t count_1s=0,new_dif_pote =0;
-	if(pote_dif<3)
-	count_1s++;
+	if(pote_dif<3){
+		count_1s++;
+
+	}
+
 	else
 		count_1s=0;
 	if(count_1s>=1000){
 		count_1s=0;
-			if(!flag_serie){
-			sprintf(string_serie,"potenciometro = %3d% \n\r",a);
-			send_char(&string_serie);
-			flag_serie=1;
+		flag_transmit=1;
 
 		}
-		else{
-			flag_serie=0;
-		}
-
-		new_dif_pote=pote_dif;
 	}
+
+
+void APP_ISR_usart(char character){
+	int k=0,led_serie;
+	static struct str_trama {
+		uint8_t encab[3];
+		uint8_t n_led;
+		uint8_t dos_p;
+		uint8_t estado;
+		uint8_t fin;
+	};
+	static union u_rx{
+		struct str_trama trama;
+		uint8_t buffer[7];
+	}rx;
+
+
+
+
+
+	for(k=0;k<7-1;k++){
+
+		rx.buffer[k]=rx.buffer[k+1];
+
+	}
+	rx.buffer[6]= character;
+
+	if(rx.trama.encab[0]=='l')
+		if(rx.trama.encab[1]=='e')
+			if(rx.trama.encab[2]=='d')
+				if(rx.trama.dos_p ==':')
+					if(rx.trama.fin==0x0d){
+						led_serie=rx.trama.n_led-0x30;
+						if(rx.trama.estado=='y')
+							led_on(12+led_serie);
+						if(rx.trama.estado =='n')
+							led_off(12+led_serie);
+					}
+
+
+
+
 }
+
 
 
 void ledPulso(uint8_t led, uint32_t tiempo){

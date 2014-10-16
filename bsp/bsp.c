@@ -30,16 +30,20 @@
 
 #define BOTON GPIO_Pin_0
 
+
+
+
 /* Puertos de los leds disponibles */
 GPIO_TypeDef* leds_port[] = { GPIOD, GPIOD, GPIOD, GPIOD, GPIOD, GPIOD, GPIOD, GPIOD, GPIOD, GPIOD, GPIOD, GPIOD, GPIOD, GPIOD, GPIOD };
 /* Leds disponibles */
-const uint16_t leds[] = { LED_0,LED_1,LED_2,LED_3,LED_4,LED_5,LED_6,LED_7,LED_8,LED_9,LED_10,LED_11,LED_V, LED_R, LED_N, LED_A,    };
+const uint16_t leds[] = { LED_0,LED_1,LED_2,LED_3,LED_4,LED_5,LED_6,LED_7,LED_8,LED_9,LED_10,LED_11,LED_V, LED_R, LED_N, LED_A};
 
 uint32_t* const leds_pwm[] = { &TIM3->CCR1, &TIM3->CCR3,
 		&TIM3->CCR4, };
 
 extern void APP_ISR_sw(void);
 extern void APP_ISR_1ms(void);
+extern void APP_ISR_usart( char character);
 
 volatile uint16_t bsp_contMS = 0;
 
@@ -100,6 +104,16 @@ void TIM2_IRQHandler(void) {
 		}
 	}
 }
+void USART3_IRQHandler(void) {
+        char data;
+        if (USART_GetFlagStatus(USART3, USART_FLAG_RXNE) != RESET) {
+                USART_ClearITPendingBit(USART3, USART_IT_RXNE);
+                data = USART_ReceiveData(USART3);
+                APP_ISR_usart(data);
+
+        }
+}
+
 
 void bsp_led_init();
 void bsp_sw_init();
@@ -112,6 +126,7 @@ void bsp_uart_init();
 uint16_t read_pot();
 
 void send_char(char *character);
+
 
 void bsp_init() {
 	bsp_led_init();
@@ -306,8 +321,10 @@ void bsp_pot_init(){
 
 void bsp_uart_init(){
 
+
 	 USART_InitTypeDef USART_InitStructure;
 	 GPIO_InitTypeDef GPIO_InitStructure;
+	 NVIC_InitTypeDef NVIC_InitStructure;
 
 	    // Habilito Clocks
 	 RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
@@ -338,11 +355,27 @@ void bsp_uart_init(){
 	 USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
 	 USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 
+
+
 	     // Inicializo la USART
 	 USART_Init(USART3, &USART_InitStructure);
 
 	     // Habilito la Usart
 	 USART_Cmd(USART3, ENABLE);
+
+
+
+	 // Enable the USART RX Interrupt
+	 USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);
+	 NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
+	 NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
+	 NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+	 NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+
+	 NVIC_Init(&NVIC_InitStructure);
+
+
+
 }
 
 uint16_t read_pot(){
@@ -373,6 +406,8 @@ void send_char(char *string){
 			}
 		USART_SendData(USART3, (uint16_t) character);
 	}
+
+
 
 
 }
