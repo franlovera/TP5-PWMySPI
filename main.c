@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "bsp/bsp.h"
 #include <math.h>
+#include <stdlib.h>
 
 /**
  * @brief Se encarga de prender un led y apagarlo luego de un tiempo
@@ -17,17 +18,15 @@ char string_serie[100];
 float brillo = 0;
 int red, green, blue;
 
-
 /**
  * @brief Aplicacion principal
  */
 typedef enum {
-	Inicio, Test_adc, Test_leds, Test_sw
+	Inicio, Test_adc, Test_leds, Test_sw, Binario_adc, Volts_adc
 } estados_e;
-estados_e estado = Inicio;
+volatile estados_e estado = Inicio;
 
 int main(void) {
-
 
 	int i = 0;
 	bsp_init();
@@ -38,14 +37,12 @@ int main(void) {
 		a = read_pot();
 		pote_dif = abs(pote_old_state - a);
 
-		for (i = 0; i <= 11; i++) {
-			if (a > i * 8)
-				led_on(i);
-			else
-				led_off(i);
-		}
-
-
+//		for (i = 0; i <= 11; i++) {
+//			if (a > i * 8)
+//				led_on(i);
+//			else
+//				led_off(i);
+//		}
 
 		if (a < 12) {
 			green = 8 * a;
@@ -53,7 +50,7 @@ int main(void) {
 			red = 100;
 		}
 
-		if (12 <= a && a< 26) {
+		if (12 <= a && a < 26) {
 			// Code
 			green = 100;
 			blue = 0;
@@ -72,14 +69,14 @@ int main(void) {
 			green = 100 - 8 * a;
 
 		}
-		if (59<=a && a<78) {
+		if (59 <= a && a < 78) {
 			red = 8 * a;
 			green = 0;
 			blue = 100;
 		}
-		if (78<=a && a<101) {
+		if (78 <= a && a < 101) {
 			// Code
-			red=100;
+			red = 100;
 			green = 0;
 			blue = 100 - 8 * a;
 
@@ -88,21 +85,43 @@ int main(void) {
 		led_setBright(1, (uint8_t) red);
 		led_setBright(2, (uint8_t) blue);
 
-
 		switch (estado) {
-				case Inicio:
-					// Proceso estado
-			sprintf(string_serie, "1:Test ADC \n\r 2:Test LEDS\n\r 3: Test Switch\n\r");
+		case Inicio:
+			// Proceso estado
+			sprintf(string_serie,
+					"\n\r1:Test ADC \n\r 2:Test LEDS\n\r 3: Test Switch\n\r");
 			send_char(&string_serie);
-			while(estado==Inicio);
-					break;
-//				case estado2:
-//					// Proceso estado
-//					if (sw_getState(BT_DERECHA) == 0) {
-//						pulsoLed(0, 1000);
-//						estado = estado3;
-//					}
-//					break;
+			while (estado == Inicio)
+				;
+			break;
+		case Test_adc:
+			// Proceso estado
+			sprintf(string_serie,
+					"\n\r1:Binario \n\r 2:Volts \n\r 3: Test Switch\n\r");
+			send_char(&string_serie);
+			while (estado == Test_adc)
+				;
+			break;
+		case Binario_adc:
+			// Proceso estado
+			sprintf(string_serie, "\n\r%x\n\r", a * 41);
+			send_char(&string_serie);
+			estado = Inicio;
+			break;
+		case Volts_adc:
+			// Proceso estado
+			sprintf(string_serie, "\n\r%f\n\r", (float) a * 3.3 / 100);
+			send_char(&string_serie);
+			estado = Inicio;
+			break;
+		case Test_leds:
+			// Proceso estado
+			sprintf(string_serie,
+					"\n\rIngrese cantidad de leds a encender\n\r");
+			send_char(&string_serie);
+			while (estado == Test_leds)
+				;
+			break;
 //				case estado3:
 //					// Proceso estado
 //					if (sw_getState(BT_ABAJO) == 0) {
@@ -117,9 +136,7 @@ int main(void) {
 //						estado = estado1;
 //					}
 //					break;
-				}
-
-
+		}
 
 //		if (flag_transmit) {
 //			if (!flag_serie) {
@@ -162,18 +179,46 @@ void APP_ISR_1ms(void) {
 }
 
 void APP_ISR_usart(char character) {
-	if(estado==Inicio){
-		if(character=='1')
+	int k;
+
+	if (estado == Inicio) {
+		if (character == '1')
 			estado = Test_adc;
-		if(character=='2')
+		if (character == '2')
 			estado = Test_leds;
-		if(character=='3')
+		if (character == '3')
 			estado = Test_sw;
-		else
-			estado=Inicio;
+		character = 0;
+
+	}
+	if (estado == Test_adc) {
+
+		if (character == '1')
+			estado = Binario_adc;
+		if (character == '2')
+			estado = Volts_adc;
+		character = 0;
+
+	}
+	if (estado == Test_leds && character != 0) {
+		character = character - 0x30;
+		for (k = 0; k <= 7; k++){
+			led_off(k);
+		}
+
+
+		while (character > 1) {
+			if (character > 8)
+				character = 8;
+			led_on(character);
+			character--;
+
+		}
+		estado = Inicio;
 	}
 
-
+//
+//
 //	int k = 0, led_serie;
 //	static struct str_trama {
 //		uint8_t encab[3];
