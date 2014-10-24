@@ -13,14 +13,22 @@ void ledPulso(uint8_t led, uint32_t tiempo);
 
 int a, pote_old_state, pote_dif;
 int flag = 0, flag_serie = 0, flag_transmit = 0;
-char string_serie[50];
+char string_serie[100];
 float brillo = 0;
 int red, green, blue;
+
 
 /**
  * @brief Aplicacion principal
  */
+typedef enum {
+	Inicio, Test_adc, Test_leds, Test_sw
+} estados_e;
+estados_e estado = Inicio;
+
 int main(void) {
+
+
 	int i = 0;
 	bsp_init();
 
@@ -37,47 +45,7 @@ int main(void) {
 				led_off(i);
 		}
 
-//		switch ( a ) {
-//		case a<12:
-//		  // Code
-//			green=8*a;
-//			blue=0;
-//			red=100;
-//		  break;
-//		case 12<=a<26:
-//		  // Code
-//			green=100;
-//			blue=0;
-//			red=100-8*a;
-//		  break;
-//		case 26<=a<42:
-//		  // Code
-//			blue=8*a;
-//			red=0;
-//			green=100;
-//		  break;
-//		case 42<=a<59:
-//		  // Code
-//			blue=100;
-//			red=0;
-//			green=100-8*a;
-//		  break;
-//		case 59<=a<78:
-//		  // Code
-//			red=8*a;
-//			green=0;
-//			blue=100;
-//		  break;
-//		case 78<=a<101:
-//		  // Code
-//			red=100;
-//			green=0;
-//			blue=100-8*a;
-//		  break;
-//		default:
-//		  // Code
-//		  break;
-//		}
+
 
 		if (a < 12) {
 			green = 8 * a;
@@ -121,23 +89,47 @@ int main(void) {
 		led_setBright(2, (uint8_t) blue);
 
 
+		switch (estado) {
+				case Inicio:
+					// Proceso estado
+			sprintf(string_serie, "1:Test ADC \n\r 2:Test LEDS\n\r 3: Test Switch\n\r");
+			send_char(&string_serie);
+			while(estado==Inicio);
+					break;
+//				case estado2:
+//					// Proceso estado
+//					if (sw_getState(BT_DERECHA) == 0) {
+//						pulsoLed(0, 1000);
+//						estado = estado3;
+//					}
+//					break;
+//				case estado3:
+//					// Proceso estado
+//					if (sw_getState(BT_ABAJO) == 0) {
+//						pulsoLed(0, 1000);
+//						estado = estado4;
+//					}
+//					break;
+//				case estado4:
+//					// Proceso estado
+//					if (sw_getState(BT_ARRIBA) == 0) {
+//						pulsoLed(0, 1000);
+//						estado = estado1;
+//					}
+//					break;
+				}
 
-//		brillo=50*(sinf((a*3.6*3.14/180))+1);
-//		led_setBright(0, (uint8_t) brillo);
-//		brillo=50*(sinf((a*3.6*3.14/180)+1/2*3.14)+1);
-//		led_setBright(1, (uint8_t) brillo);
-//		brillo=50*(sinf((a*3.6*3.14/180)+3/2*3.14)+1);
-//		led_setBright(2, (uint8_t) brillo);
 
-		if (flag_transmit) {
-			if (!flag_serie) {
-				sprintf(string_serie, "potenciometro = %3d º/. \n\r", a);
-				send_char(&string_serie);
-				flag_transmit = 0;
 
-			}
-
-		}
+//		if (flag_transmit) {
+//			if (!flag_serie) {
+//				sprintf(string_serie, "potenciometro = %3d º/. \n\r", a);
+//				send_char(&string_serie);
+//				flag_transmit = 0;
+//
+//			}
+//
+//		}
 	}
 }
 
@@ -170,37 +162,49 @@ void APP_ISR_1ms(void) {
 }
 
 void APP_ISR_usart(char character) {
-	int k = 0, led_serie;
-	static struct str_trama {
-		uint8_t encab[3];
-		uint8_t n_led;
-		uint8_t dos_p;
-		uint8_t estado;
-		uint8_t fin;
-	};
-	static union u_rx {
-		struct str_trama trama;
-		uint8_t buffer[7];
-	} rx;
-
-	for (k = 0; k < 7 - 1; k++) {
-
-		rx.buffer[k] = rx.buffer[k + 1];
-
+	if(estado==Inicio){
+		if(character=='1')
+			estado = Test_adc;
+		if(character=='2')
+			estado = Test_leds;
+		if(character=='3')
+			estado = Test_sw;
+		else
+			estado=Inicio;
 	}
-	rx.buffer[6] = character;
 
-	if (rx.trama.encab[0] == 'l')
-		if (rx.trama.encab[1] == 'e')
-			if (rx.trama.encab[2] == 'd')
-				if (rx.trama.dos_p == ':')
-					if (rx.trama.fin == 0x0d) {
-						led_serie = rx.trama.n_led - 0x30;
-						if (rx.trama.estado == 'y')
-							led_on(12 + led_serie);
-						if (rx.trama.estado == 'n')
-							led_off(12 + led_serie);
-					}
+
+//	int k = 0, led_serie;
+//	static struct str_trama {
+//		uint8_t encab[3];
+//		uint8_t n_led;
+//		uint8_t dos_p;
+//		uint8_t estado;
+//		uint8_t fin;
+//	};
+//	static union u_rx {
+//		struct str_trama trama;
+//		uint8_t buffer[7];
+//	} rx;
+//
+//	for (k = 0; k < 7 - 1; k++) {
+//
+//		rx.buffer[k] = rx.buffer[k + 1];
+//
+//	}
+//	rx.buffer[6] = character;
+//
+//	if (rx.trama.encab[0] == 'l')
+//		if (rx.trama.encab[1] == 'e')
+//			if (rx.trama.encab[2] == 'd')
+//				if (rx.trama.dos_p == ':')
+//					if (rx.trama.fin == 0x0d) {
+//						led_serie = rx.trama.n_led - 0x30;
+//						if (rx.trama.estado == 'y')
+//							led_on(12 + led_serie);
+//						if (rx.trama.estado == 'n')
+//							led_off(12 + led_serie);
+//					}
 
 }
 
